@@ -12,7 +12,8 @@ export function useLiveScores() {
 
     const connectRealSocket = () => {
       dispatch(setConnectionStatus('connecting'));
-      const ws = new WebSocket('ws://localhost:8080/live');
+      const socketUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8080/live';
+      const ws = new WebSocket(socketUrl);
       let hasConnected = false;
 
       let pingInterval;
