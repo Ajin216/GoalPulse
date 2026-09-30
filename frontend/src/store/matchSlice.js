@@ -137,7 +137,8 @@ export const fetchStandingsData = createAsyncThunk(
   'match/fetchStandings',
   async (competitionId) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/competitions/${competitionId}/standings`);
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+      const response = await fetch(`${baseUrl}/api/competitions/${competitionId}/standings`);
       if (!response.ok) throw new Error('Failed to fetch standings');
       return await response.json();
     } catch (e) {
@@ -151,7 +152,8 @@ export const fetchMatchesData = createAsyncThunk(
   'match/fetchMatches',
   async (competitionId) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/competitions/${competitionId}/matches`);
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+      const response = await fetch(`${baseUrl}/api/competitions/${competitionId}/matches`);
       if (!response.ok) throw new Error('Failed to fetch matches');
       return await response.json();
     } catch (e) {
@@ -165,7 +167,8 @@ export const fetchScorersData = createAsyncThunk(
   'match/fetchScorers',
   async (competitionId) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/competitions/${competitionId}/scorers`);
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+      const response = await fetch(`${baseUrl}/api/competitions/${competitionId}/scorers`);
       if (!response.ok) throw new Error('Failed to fetch scorers');
       return await response.json();
     } catch (e) {
