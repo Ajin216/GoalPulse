@@ -6,13 +6,14 @@ const { startPolling } = require('./poller');
 const cache = require('./cache');
 const { fetchStandings, fetchTopScorers } = require('./sportsApiClient');
 
+const cors = require('cors');
 const app = express();
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept']
+}));
 
 const server = http.createServer(app);
 
