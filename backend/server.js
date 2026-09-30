@@ -7,13 +7,18 @@ const cache = require('./cache');
 const { fetchStandings, fetchTopScorers } = require('./sportsApiClient');
 
 const cors = require('cors');
+const { GoogleGenAI } = require('@google/genai');
+
 const app = express();
+app.use(express.json());
 
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept']
 }));
+
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 const server = http.createServer(app);
 
@@ -84,6 +89,34 @@ app.get('/api/competitions/:id/scorers', async (req, res) => {
   } catch (error) {
     console.error(`Error fetching scorers for ${id}:`, error.message);
     res.status(500).json({ error: 'Failed to fetch scorers' });
+  }
+});
+
+// Chat endpoint
+app.post('/api/chat', async (req, res) => {
+  try {
+    const { message } = req.body;
+    if (!message) {
+      return res.status(400).json({ error: 'Message is required' });
+    }
+    
+    const currentCache = cache.get();
+    const liveMatches = (currentCache.matches || []).filter(m => m.status === 'LIVE').map(m => `${m.homeTeam.shortName} vs ${m.awayTeam.shortName} (${m.score.fullTime.home}-${m.score.fullTime.away})`).join(', ');
+    
+    const systemInstruction = `You are the official AI Football Assistant for GoalPulse, a live football score and stats website. Answer questions about football history, rules, players, leagues, and teams concisely and enthusiastically. Keep answers under 3-4 sentences unless asked for detail. If asked about non-football topics, politely steer the conversation back to football. Current live matches context: ${liveMatches || 'No live matches right now.'}`;
+
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: message,
+      config: {
+        systemInstruction,
+      }
+    });
+
+    res.json({ reply: response.text });
+  } catch (error) {
+    console.error('Error generating chat response:', error);
+    res.status(500).json({ error: 'Failed to generate chat response' });
   }
 });
 

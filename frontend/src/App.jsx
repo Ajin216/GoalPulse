@@ -8,6 +8,7 @@ import StandingsTable from './components/StandingsTable';
 import TopScorersList from './components/TopScorersList';
 import TopAssistersList from './components/TopAssistersList';
 import MatchCard from './components/MatchCard';
+import ChatBot from './components/ChatBot';
 import { setSelectedMatchId } from './store/matchSlice';
 
 function App() {
@@ -95,6 +96,7 @@ function App() {
       </div>
 
       <MatchModal />
+      <ChatBot />
     </div>
   );
 }
