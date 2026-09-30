@@ -106,7 +106,7 @@ app.post('/api/chat', async (req, res) => {
     const systemInstruction = `You are the official AI Football Assistant for GoalPulse, a live football score and stats website. Answer questions about football history, rules, players, leagues, and teams concisely and enthusiastically. Keep answers under 3-4 sentences unless asked for detail. If asked about non-football topics, politely steer the conversation back to football. Current live matches context: ${liveMatches || 'No live matches right now.'}`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3.8-flash',
       contents: message,
       config: {
         systemInstruction,

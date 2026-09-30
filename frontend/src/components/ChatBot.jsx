@@ -54,7 +54,7 @@ const ChatBot = () => {
     <>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-5 right-5 w-14 h-14 bg-live hover:bg-live/80 text-white rounded-full flex items-center justify-center text-2xl shadow-lg transition-transform hover:scale-105 z-[9999]"
+        className="fixed bottom-5 right-5 w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center text-2xl shadow-lg transition-transform hover:scale-105 z-[9999]"
         aria-label="Toggle Chat"
       >
         ⚽
@@ -62,7 +62,7 @@ const ChatBot = () => {
 
       {isOpen && (
         <div className="fixed bottom-24 right-5 w-80 md:w-96 bg-surface border border-subtle rounded-xl shadow-2xl z-[9999] flex flex-col overflow-hidden" style={{ maxHeight: '70vh', height: '500px' }}>
-          <div className="bg-live text-white px-4 py-3 font-bold font-display uppercase tracking-wide flex justify-between items-center">
+          <div className="bg-blue-600 text-white px-4 py-3 font-bold font-display uppercase tracking-wide flex justify-between items-center">
             <span>GoalPulse AI</span>
             <button onClick={() => setIsOpen(false)} className="text-white hover:text-white/80">
               ✕
@@ -72,7 +72,7 @@ const ChatBot = () => {
           <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-base">
             {messages.map((msg, idx) => (
               <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[80%] rounded-lg px-4 py-2 text-sm ${msg.role === 'user' ? 'bg-live text-white rounded-br-none' : 'bg-surface border border-subtle text-primary rounded-bl-none'}`}>
+                <div className={`max-w-[80%] rounded-lg px-4 py-2 text-sm ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-surface border border-subtle text-primary rounded-bl-none'}`}>
                   {msg.content}
                 </div>
               </div>
@@ -93,13 +93,13 @@ const ChatBot = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about football..."
-              className="flex-1 bg-base border border-subtle rounded-md px-3 py-2 text-sm text-primary focus:outline-none focus:border-live"
+              className="flex-1 bg-base border border-subtle rounded-md px-3 py-2 text-sm text-primary focus:outline-none focus:border-blue-600"
               disabled={isLoading}
             />
             <button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="bg-live text-white px-4 py-2 rounded-md text-sm font-bold disabled:opacity-50 transition-opacity"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-bold disabled:opacity-50 transition-opacity"
             >
               Send
             </button>
